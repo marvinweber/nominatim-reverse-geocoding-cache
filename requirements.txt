@@ -1,0 +1,4 @@
+Flask
+gunicorn
+redis
+requests
