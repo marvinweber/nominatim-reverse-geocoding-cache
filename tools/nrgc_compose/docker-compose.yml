@@ -9,8 +9,6 @@ services:
     environment:
       - REDIS_HOST=redis
     command: ['gunicorn', 'app:app', '--bind', '0.0.0.0:8000', '--error-logfile', '-', '--access-logfile', '-', '--access-logformat', 'gunic: request_id=%({X-Request-Id}i)s referer="%(f)s" user_agent="%(a)s"']
-    ports:
-      - "8000:8000"
   redis:
     image: redis
     environment:
