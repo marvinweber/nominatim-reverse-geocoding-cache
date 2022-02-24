@@ -22,6 +22,8 @@ NOMINATIM_SERVER = 'https://nominatim.openstreetmap.org'
 LAST_NOMINATIM_REQUEST_KEY = 'LAST_NOMINATIM_REQUEST'
 NOMINATIM_REQ_TIMEOUT = 2  # 2 seconds
 
+DATA_TTL = 60 * 60 * 24 * 365 * 2  # 2 years
+
 REQ_COUNTER_CACHE_KEY = 'request_counter'
 NOMINATIM_REQ_COUNTER_CACHE_KEY = 'nominatim_request_counter'
 
@@ -82,8 +84,8 @@ def reverse():
         r.set(LAST_NOMINATIM_REQUEST_KEY, datetime.now().timestamp())
         
         # cache request data
-        r.set(cache_key_data, response_data)
-        r.set(cache_key_info, json.dumps(response_info))
+        r.set(cache_key_data, response_data, DATA_TTL)
+        r.set(cache_key_info, json.dumps(response_info), DATA_TTL)
     else:
         logger.debug('Serving cached request...')
         response_info = json.loads(response_info)
