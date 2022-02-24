@@ -4,6 +4,7 @@ services:
   nrgc-app:
     build: 
       context: ../..
+    restart: unless-stopped
     depends_on:
       - redis
     environment:
